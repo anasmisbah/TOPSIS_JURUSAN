@@ -44,7 +44,7 @@ class KriteriaController extends Controller
 
         Kriteria::create($request->all());
 
-        return view('kriteria.index');
+        return redirect()->route('kriteria.index');
     }
 
     /**
@@ -89,7 +89,7 @@ class KriteriaController extends Controller
 
         $kriteria->update($request->all());
 
-        return view('kriteria.index');
+        return redirect()->route('kriteria.index');
 
 
     }
@@ -105,6 +105,6 @@ class KriteriaController extends Controller
         $kriteria = Kriteria::findOrFail($id);
         $kriteria->delete();
 
-        return view('kriteria.index');
+        return redirect()->route('kriteria.index');
     }
 }
