@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Kriteria;
 
 class KriteriaController extends Controller
 {
@@ -13,7 +14,8 @@ class KriteriaController extends Controller
      */
     public function index()
     {
-        //
+        $kriterias = Kriteria::all();
+        return view('kriteria.index', compact('kriterias'));
     }
 
     /**
@@ -23,7 +25,7 @@ class KriteriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('kriteria.create');
     }
 
     /**
@@ -34,7 +36,15 @@ class KriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required|min:3',
+            'bobot'=>'required',
+            'kategori'=>'required'
+        ]);
+
+        Kriteria::create($request->all());
+
+        return view('kriteria.index');
     }
 
     /**
@@ -56,7 +66,9 @@ class KriteriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kriteria = Kriteria::findOrFail($id);
+
+        return view('kriteria.edit',compact('kriteria'));
     }
 
     /**
@@ -68,7 +80,18 @@ class KriteriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kriteria = Kriteria::findOrFail($id);
+        $request->validate([
+            'nama'=>'required|min:3',
+            'bobot'=>'required',
+            'kategori'=>'required'
+        ]);
+
+        $kriteria->update($request->all());
+
+        return view('kriteria.index');
+
+
     }
 
     /**
@@ -79,6 +102,9 @@ class KriteriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kriteria = Kriteria::findOrFail($id);
+        $kriteria->delete();
+
+        return view('kriteria.index');
     }
 }
