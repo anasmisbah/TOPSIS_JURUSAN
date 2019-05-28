@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('kriteria', 'KriteriaController');
+Route::resource('alternatif', 'AlternatifController');
