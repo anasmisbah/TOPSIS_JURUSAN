@@ -13,8 +13,12 @@ class CreateKriteriaTable extends Migration
      */
     public function up()
     {
-        Schema::table('kriteria', function (Blueprint $table) {
-            //
+        Schema::create('kriteria', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('nama');
+            $table->enum('kategori', ['benefit', 'cost']);
+            $table->integer('bobot');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class CreateKriteriaTable extends Migration
      */
     public function down()
     {
-        Schema::table('kriteria', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('kriteria');
     }
 }
