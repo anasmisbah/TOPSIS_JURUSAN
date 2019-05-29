@@ -17,3 +17,13 @@ Route::get('/', function () {
 
 Route::resource('kriteria', 'KriteriaController');
 Route::resource('alternatif', 'AlternatifController');
+Route::resource('siswa', 'SiswaController');    
+
+Route::get('tes', function () {
+    $array = [];
+
+    for ($i=0; $i < 5; $i++) { 
+        $array[]['value']= $i;
+    }
+    dd($array);
+});

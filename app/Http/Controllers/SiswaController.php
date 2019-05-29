@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Siswa;
+use App\Kriteria;
 
 class SiswaController extends Controller
 {
@@ -13,7 +15,8 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+        $siswas = Siswa::all();
+        return view('siswa.index',compact('siswas'));
     }
 
     /**
@@ -23,7 +26,8 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
+        $kriterias = Kriteria::all();
+        return view('siswa.create',compact('kriterias'));
     }
 
     /**
@@ -34,7 +38,26 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama'=>'required',
+            'nis'=>'required',
+            'kelas'=>'required',
+            'jurusan'=>'required',
+        ]);
+
+        $foto = '/images/ava.jpg';
+        if ($request->file('foto')) {
+            $foto = $request->file('foto')->store('fotos','public');
+        }
+
+        $siswa = new Siswa;
+        $siswa->nis = $request->nis;
+        $siswa->nama = $request->nama;
+        $siswa->kelas = $request->kelas;
+        $siswa->jurusan = $request->jurusan;
+        $siswa->foto = $foto;
+        $siswa->save();
+        return redirect()->route('siswa.index'); 
     }
 
     /**
@@ -56,7 +79,9 @@ class SiswaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        $kriterias = Kriteria::all();
+        return view('siswa.edit',['siswa'=>$siswa,'kriterias'=>$kriterias]);
     }
 
     /**
@@ -68,7 +93,28 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        $request->validate([
+            'nama'=>'required',
+            'nis'=>'required',
+            'kelas'=>'required',
+            'jurusan'=>'required',
+        ]);
+
+       
+        if ($request->file('foto')) {
+            if ($siswa->foto && file_exists(storage_path('app/public/'.$siswa->foto))) {
+                Storage::delete('public/'.$siswa->foto);
+            }
+            $file = $request->file('foto')->store('fotos','public');
+            $siswa->foto = $file;
+        }
+        $siswa->nis = $request->nis;
+        $siswa->nama = $request->nama;
+        $siswa->kelas = $request->kelas;
+        $siswa->jurusan = $request->jurusan;
+        $siswa->save();
+        return redirect()->route('siswa.index'); 
     }
 
     /**
@@ -79,6 +125,11 @@ class SiswaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        if ($siswa->foto && file_exists(storage_path('app/public/'.$siswa->foto))) {
+            Storage::delete('public/'.$siswa->foto);
+        }
+        $siswa->delete();
+        return redirect()->route('siswa.index'); 
     }
 }
