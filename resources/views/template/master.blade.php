@@ -91,7 +91,7 @@
                             <a title="Kriteria" href="{{ route('kriteria.index') }}" aria-expanded="false"><span class="educate-icon educate-course icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Kriteria</span></a>
                         </li>
                         <li>
-                            <a title="Kriteria" href="{{ route('kriteria.index') }}" aria-expanded="false"><span class="educate-icon educate-library icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Alternatif</span></a>
+                            <a title="Kriteria" href="{{ route('alternatif.index') }}" aria-expanded="false"><span class="educate-icon educate-library icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Alternatif</span></a>
                         </li>
                         <li class="active">
                             <a class="has-arrow" href="index.html">
