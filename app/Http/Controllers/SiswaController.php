@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Siswa;
 use App\Kriteria;
+use App\Alternatif;
 
 class SiswaController extends Controller
 {
@@ -27,7 +28,8 @@ class SiswaController extends Controller
     public function create()
     {
         $kriterias = Kriteria::all();
-        return view('siswa.create',compact('kriterias'));
+        $alternatifs = Alternatif::all();
+        return view('siswa.create',['kriterias'=>$kriterias,'alternatifs'=>$alternatifs]);
     }
 
     /**
@@ -81,7 +83,8 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::findOrFail($id);
         $kriterias = Kriteria::all();
-        return view('siswa.edit',['siswa'=>$siswa,'kriterias'=>$kriterias]);
+        $alternatifs = Alternatif::all();
+        return view('siswa.edit',['siswa'=>$siswa,'kriterias'=>$kriterias,'alternatifs'=>$alternatifs]);
     }
 
     /**

@@ -8,5 +8,10 @@ class Siswa extends Model
 {
     public $table = "siswa";
     protected $fillable = ['nama','nis','jurusan','kelas','foto'];
+
+    public function kriterias()
+    {
+        return $this->belongsToMany(Kriteria::class)->withPivot('nilai')->withTimestamps();
+    }
     
 }
