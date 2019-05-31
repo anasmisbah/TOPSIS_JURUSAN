@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Siswa;
 use App\Kriteria;
 use App\Alternatif;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
@@ -40,6 +41,7 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
+        $kriteriaDB = Kriteria::all();
         $request->validate([
             'nama'=>'required',
             'nis'=>'required',
@@ -47,6 +49,10 @@ class SiswaController extends Controller
             'jurusan'=>'required',
         ]);
 
+        $kriterias = [];
+        foreach ($request->kriteria as $key =>  $kriteria) {
+            $kriterias[$kriteriaDB[$key]->id]['nilai']= $kriteria;
+        }
         $foto = '/images/ava.jpg';
         if ($request->file('foto')) {
             $foto = $request->file('foto')->store('fotos','public');
@@ -59,6 +65,8 @@ class SiswaController extends Controller
         $siswa->jurusan = $request->jurusan;
         $siswa->foto = $foto;
         $siswa->save();
+
+        $siswa->kriterias()->attach($kriterias);
         return redirect()->route('siswa.index'); 
     }
 
@@ -96,6 +104,7 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $kriteriaDB = Kriteria::all();
         $siswa = Siswa::findOrFail($id);
         $request->validate([
             'nama'=>'required',
@@ -103,6 +112,11 @@ class SiswaController extends Controller
             'kelas'=>'required',
             'jurusan'=>'required',
         ]);
+
+        $kriterias = [];
+        foreach ($request->kriteria as $key =>  $kriteria) {
+            $kriterias[$kriteriaDB[$key]->id]['nilai']= $kriteria;
+        }
 
        
         if ($request->file('foto')) {
@@ -117,6 +131,7 @@ class SiswaController extends Controller
         $siswa->kelas = $request->kelas;
         $siswa->jurusan = $request->jurusan;
         $siswa->save();
+        $siswa->kriterias()->sync($kriterias);
         return redirect()->route('siswa.index'); 
     }
 

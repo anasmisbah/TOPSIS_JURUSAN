@@ -50,6 +50,7 @@
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('template/style.css') }}">
+       
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ asset('template/css/responsive.css') }}">
