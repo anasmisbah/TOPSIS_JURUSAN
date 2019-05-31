@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Siswa;
 use App\Kriteria;
 use App\Alternatif;
+use App\Preferensi;
 
 class PerhitunganController extends Controller
 {
@@ -189,9 +190,32 @@ class PerhitunganController extends Controller
         foreach ($alternatifs as $x => $alternatif) {
             $nilaipreferensi[$x] = ($akarjmlperbarismatrikssolusidminus[$x]/($akarjmlperbarismatrikssolusidminus[$x]+$akarjmlperbarismatrikssolusidplus[$x]));
 
-            
+            Preferensi::updateOrCreate(
+                [
+                    'siswa_id'=>$siswa->id,
+                    'alternatif_id'=>$alternatif->id
+                ],
+                [
+                    'nilai_preferensi'=>$nilaipreferensi[$x]
+                ]
+            );
         }
-        dd($nilaipreferensi);
+        
+        $preferensiDB = Preferensi::orderBy('nilai_preferensi','desc')->get();
+        return view('perhitungan.hasilsiswa',[
+            'matriks' => $matriks,
+            'kriterias'=>$kriterias,
+            'alternatifs'=>$alternatifs,
+            'matriksternormalisasi'=>$matriksternormalisasi,
+            'matriksternormalisasiterbobot'=> $matriksternormalisasiterbobot,
+            'solusiidelaplus'=> $solusiidelaplus,
+            'solusiidealminus'=> $solusiidealminus,
+            'matriksjaraksolusidplus'=> $matriksjaraksolusidplus,
+            'matriksjaraksolusidminus'=> $matriksjaraksolusidminus,
+            'akarjmlperbarismatrikssolusidminus'=>$akarjmlperbarismatrikssolusidminus,
+            'akarjmlperbarismatrikssolusidplus'=>$akarjmlperbarismatrikssolusidplus,
+            'preferensi'=>$preferensiDB,
+        ]);
         
        
         
