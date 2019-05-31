@@ -100,7 +100,7 @@
                                 <span class="mini-click-non">Analisa</span>
                             </a>
                             <ul class="submenu-angle" aria-expanded="true">
-                                <li><a title="Analytics" href="analytics.html"><span class="mini-sub-pro">Perhitungan Topsis</span></a></li>
+                                <li><a title="Analytics" href="{{ route('perhitungan.siswa') }}"><span class="mini-sub-pro">Perhitungan Topsis</span></a></li>
                                 <li><a title="Widgets" href="widgets.html"><span class="mini-sub-pro">Perangkingan</span></a></li>
                             </ul>
                         </li>

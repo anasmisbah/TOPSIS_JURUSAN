@@ -18,12 +18,6 @@ Route::get('/', function () {
 Route::resource('kriteria', 'KriteriaController');
 Route::resource('alternatif', 'AlternatifController');
 Route::resource('siswa', 'SiswaController');    
+Route::get('/perhitungan','PerhitunganController@daftarSiswa')->name('perhitungan.siswa');
+Route::get('/perhitungan/{id}','PerhitunganController@prosesHitung')->name('perhitungan.proseshitung');
 
-Route::get('tes', function () {
-    $array = [];
-
-    for ($i=0; $i < 5; $i++) { 
-        $array[]['value']= $i;
-    }
-    dd($array);
-});
