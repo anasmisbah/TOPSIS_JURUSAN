@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="add-product">
-                            <a href="{{ route('alternatif.create') }}">Tambah Alternatif</a>
+                            <a href="{{ route('perhitungan.perangkingan') }}">Hitung semua</a>
                         </div>
 
                     <div class="sparkline13-graph">

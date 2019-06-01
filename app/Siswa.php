@@ -13,5 +13,9 @@ class Siswa extends Model
     {
         return $this->belongsToMany(Kriteria::class)->withPivot('nilai')->withTimestamps();
     }
+    public function preferensi()
+    {
+        return $this->hasMany(Preferensi::class);
+    }
     
 }
