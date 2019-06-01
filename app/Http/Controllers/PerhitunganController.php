@@ -100,40 +100,37 @@ class PerhitunganController extends Controller
 
         $solusiidelaplus =[];
         $solusiidealminus =[];
-
+        foreach ($kriterias as $x => $kriteria) {
+            $solusiidelaplus[$x] =0;
+        $solusiidealminus[$x] =0;
+        }
         
         //solusi ideal posistif
         for ($x=0; $x < $kriterias->count(); $x++) { 
-            for ($y=0; $y < $alternatifs->count() - 1 ; $y++) { 
+            $solusiidelaplus[$x]= $matriksternormalisasiterbobot[0][$x];
+            for ($y=0; $y < $alternatifs->count() ; $y++) { 
                 if ($kriterias[$x]->kategori == 'benefit') {
-                    if ($matriksternormalisasiterbobot[$y][$x] < $matriksternormalisasiterbobot[$y+1][$x]) {
-                        $solusiidelaplus[$x]= $matriksternormalisasiterbobot[$y+1][$x];
-                    }else {
+                    if ($solusiidelaplus[$x] < $matriksternormalisasiterbobot[$y][$x]) {
                         $solusiidelaplus[$x]= $matriksternormalisasiterbobot[$y][$x];
                     }
                 } else {
-                    if ($matriksternormalisasiterbobot[$y][$x] > $matriksternormalisasiterbobot[$y+1][$x]) {
+                    if ($solusiidelaplus[$x] > $matriksternormalisasiterbobot[$y][$x]) {
                         $solusiidelaplus[$x]= $matriksternormalisasiterbobot[$y+1][$x];
-                    }else {
-                        $solusiidelaplus[$x]= $matriksternormalisasiterbobot[$y][$x];
                     }
                 }
             }
         }
         //solusi ideal negatif
         for ($x=0; $x < $kriterias->count(); $x++) { 
+            $solusiidealminus[$x] = $matriksternormalisasiterbobot[0][$x];
             for ($y=0; $y < $alternatifs->count() - 1 ; $y++) { 
                 if ($kriterias[$x]->kategori == 'benefit') {
-                    if ($matriksternormalisasiterbobot[$y][$x] > $matriksternormalisasiterbobot[$y+1][$x]) {
-                        $solusiidealminus[$x]= $matriksternormalisasiterbobot[$y+1][$x];
-                    }else {
+                    if ($solusiidealminus[$x] > $matriksternormalisasiterbobot[$y][$x]) {
                         $solusiidealminus[$x]= $matriksternormalisasiterbobot[$y][$x];
                     }
                 } else {
-                    if ($matriksternormalisasiterbobot[$y][$x] < $matriksternormalisasiterbobot[$y+1][$x]) {
+                    if ($solusiidealminus[$x] < $matriksternormalisasiterbobot[$y][$x]) {
                         $solusiidealminus[$x]= $matriksternormalisasiterbobot[$y+1][$x];
-                    }else {
-                        $solusiidealminus[$x]= $matriksternormalisasiterbobot[$y][$x];
                     }
                 }
             }
@@ -201,7 +198,7 @@ class PerhitunganController extends Controller
             );
         }
         
-        $preferensiDB = Preferensi::orderBy('nilai_preferensi','desc')->get();
+        $preferensiDB = Preferensi::where('siswa_id',$id)->orderBy('nilai_preferensi','desc')->get();
         return view('perhitungan.hasilsiswa',[
             'matriks' => $matriks,
             'kriterias'=>$kriterias,

@@ -80,6 +80,43 @@
             <div class="sparkline8-list">
                 <div class="sparkline8-hd">
                     <div class="main-sparkline8-hd">
+                        <h1>Matriks Ternormalisasi Terbobot</h1>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    <div class="static-table-list">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Alternatif</th>
+                                    @foreach ($kriterias as $kriteria)
+                                        <th>{{ $kriteria->nama }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($alternatifs as $x => $alternatif)
+                                    <tr>
+                                        <td>{{ $x+1 }}</td>
+                                        <td>{{ $alternatif->nama }}</td>
+                                        @foreach ($kriterias as $y => $kriteria)
+                                            <td>{{ round($matriksternormalisasiterbobot[$x][$y],4) }}</td>
+                                        @endforeach
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center" style="margin-bottom:10px">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="sparkline8-list">
+                <div class="sparkline8-hd">
+                    <div class="main-sparkline8-hd">
                         <h1>Matriks Solusi Ideal</h1>
                     </div>
                 </div>
