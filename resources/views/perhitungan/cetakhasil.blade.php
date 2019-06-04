@@ -11,22 +11,28 @@
 <body>
     <div class="container">
         <div class="row text-center" style="margin-top:20px">
-            <h1>Hasil Penjurusan</h1>
+            <h1>Hasil Penjurusan Sistem</h1>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <table class="table table-hover">
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Jurusan</th>
+                        <th>NIS</th>
+                        <th>Nama Siswa</th>
+                        <th>Hasil Penjurusan</th>
+                        <th>Data Awal</th>
+                        <th>Keterangan</th>
                     </tr>
             
                     @foreach ($siswaall as $x => $siswa)
                         <tr>
                             <td>{{ $x+1 }}</td>
+                            <td>{{ $siswa->nis }}</td>
                             <td>{{ $siswa->nama }}</td>
+                            <td>{{ $siswa->jurusan }}</td>
                             <td>{{ $siswa->preferensi->sortByDesc('nilai_preferensi')->first()->alternatif->nama }}</td>
+                            <td>{{ $siswa->preferensi->sortByDesc('nilai_preferensi')->first()->alternatif->nama == $siswa->jurusan ? "Sama":"Tidak Sama" }}</td>
                         </tr>
                     @endforeach
                 </table>

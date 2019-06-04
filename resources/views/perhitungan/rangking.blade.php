@@ -6,7 +6,7 @@
             <div class="sparkline8-list">
                 <div class="sparkline8-hd">
                     <div class="main-sparkline8-hd">
-                        <h1>Matriks Keputusan</h1>
+                        <h1>Hasil Penjurusan Sistem</h1>
                     </div>
                 </div>
                 <div class="sparkline8-graph">
@@ -15,16 +15,22 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>NIS</th>
                                     <th>Nama Siswa</th>
                                     <th>Hasil Penjurusan</th>
+                                    <th>Data Awal</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($siswaall as $x => $siswa)
                                     <tr>
                                         <td>{{ $x+1 }}</td>
+                                        <td>{{ $siswa->nis }}</td>
                                         <td>{{ $siswa->nama }}</td>
                                         <td>{{ $siswa->preferensi->sortByDesc('nilai_preferensi')->first()->alternatif->nama }}</td>
+                                        <td>{{ $siswa->jurusan }}</td>
+                                        <td>{{ $siswa->preferensi->sortByDesc('nilai_preferensi')->first()->alternatif->nama == $siswa->jurusan ? "Sama":"Tidak Sama" }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
